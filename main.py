@@ -7,9 +7,18 @@ pg = st.navigation(
         st.Page("inicio.py", title="Início"), 
         st.Page("painel.py", title="Dashboard"), 
         st.Page("aposentadoria.py", title="Simulador Aposentadoria"),
-        st.Page("tabela_extracao.py", title="Tabela"),
-        st.Page("links_uteis.py", title="Links úteis")
+        st.Page("tabela_extracao.py", title="Tabela para Extração"),
+        st.Page("definicoes.py", title="Definições")
     ]
 )
+
+st.sidebar.write('Links Úteis')
+st.sidebar.markdown("""
+[<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="13" style="vertical-align: middle; margin-right: 5px;"> LinkedIn](https://www.linkedin.com/in/danilo-barros-machado-data-analyst/)
+
+[<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="13" style="vertical-align: middle; margin-right: 5px;"> GitHub](https://github.com/Danilo875)
+
+""", unsafe_allow_html=True)
+
 
 pg.run()
