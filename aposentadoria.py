@@ -44,6 +44,5 @@ with container:
     df_atributo.columns.name = None
     st.dataframe(df_atributo)
 
-# df_export = df.drop(['data_nascimento', 'custo_mensal', 'idade']), axis=1)
     st.write('### Tabela de funcionários para download em .csv')
     st.dataframe(df.drop(['data_nascimento', 'custo_mensal', 'idade', 'idade_simulacao', 'lider'], axis=1))
