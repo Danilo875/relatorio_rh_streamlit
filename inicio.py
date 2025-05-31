@@ -1,3 +1,8 @@
 import streamlit as st
 
-st.title('Relatório de RH')
+lang = st.session_state.get("lang", "Português")
+
+if lang == 'Português':
+    st.title('Relatório de RH')
+else:
+    st.title('HR Report')
