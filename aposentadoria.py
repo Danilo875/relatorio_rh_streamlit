@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, date
-from data_loader import carregar_dados
+from carregamento_dados import carregar_dados
 
 df = carregar_dados('base.csv')
 
@@ -18,15 +18,15 @@ with container:
     data_simulacao = datetime.combine(data_simulacao, datetime.min.time())
 
     df['data_nascimento'] = pd.to_datetime(df['data_nascimento'], format="%d/%m/%Y")
-    df['idade_simulacao'] = (data_simulacao - df['data_nascimento']).dt.days // 365
+    df['Idade'] = (data_simulacao - df['data_nascimento']).dt.days // 365
 
-    df_homens = df[(df['idade_simulacao']>=idade_minina_homem) & (df['Gênero']=='Masculino')]
-    df_mulheres = df[(df['idade_simulacao']>=idade_minina_mulher) & (df['Gênero']=='Feminino')]
+    df_homens = df[(df['Idade']>=idade_minina_homem) & (df['Gênero']=='Masculino')]
+    df_mulheres = df[(df['Idade']>=idade_minina_mulher) & (df['Gênero']=='Feminino')]
     df = pd.concat([df_homens, df_mulheres])
 
     atributo = coluna2.selectbox(label='Selecione como quer distribuir os dados:', options=['Área', 'Posição', 'Formação'], index=0)
     df_atributo = pd.crosstab(df[atributo], df['Gênero'])
-    df = df.rename(columns={
+    df_atributo = df_atributo.rename(columns={
         'Masculino': 'Homens',
         'Feminino': 'Mulheres'
     })
@@ -37,4 +37,4 @@ with container:
     st.dataframe(df_atributo)
 
     st.write('### Tabela de funcionários para download em .csv')
-    st.dataframe(df.drop(['data_nascimento', 'custo_mensal', 'idade_simulacao', 'lider'], axis=1))
+    st.dataframe(df.drop(['data_nascimento', 'custo_mensal', 'Formação', 'lider'], axis=1))

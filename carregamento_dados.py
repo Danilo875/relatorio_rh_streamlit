@@ -9,7 +9,7 @@ def carregar_dados(base):
         'posicao': 'Posição',
         'formacao': 'Formação',
         'genero': 'Gênero',
-        'qtd_liderados': 'Qtd Liderados',
+        'qtd_liderados': 'Qtd. Liderados',
         'nome': 'Nome'
     })
     return df
