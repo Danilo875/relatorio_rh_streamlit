@@ -11,7 +11,7 @@ df['idade'] = (datetime.today() - df['data_nascimento']).dt.days // 365
 
 st.title('Simulador de Aposentadoria')
 # genero_escolhido = st.text_input("Digite um gênero para filtrar a tabela:")
-# genero_escolhido = st.selectbox(label= 'Genêro', options=['Selecione uma opção', 'Masculino', 'Feminino'], index=0)
+# genero_escolhido = st.selectbox(label= 'Genêro', options=['Selecione uma opção', 'Masculino', 'Feminino'], index=0) EITA PORRA QUE FUNCIONA
 container = st.container(border=True)
 with container:
     st.write('Selecione a idade mínina para aposentadoria no seu país e veja o número de funcionários que atendem aos critérios:')
@@ -35,7 +35,6 @@ with container:
         'qtd_liderados': 'Qtd Liderados'
     })
 
-# st.write(f'Qtd homens: {df_homens.shape[0]}, qtd mulheres: {df_mulheres.shape[0]}')
     atributo = coluna2.selectbox(label='Selecione como quer distribuir os dados:', options=['Área', 'Posição', 'Formação'], index=0)
     df_atributo = pd.crosstab(df[atributo], df['Gênero'])
     df_atributo['Total'] = df_atributo.sum(axis=1)
