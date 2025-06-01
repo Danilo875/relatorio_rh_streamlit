@@ -44,6 +44,9 @@ if lang == "Português":
         })
         df_atributo['Total'] = df_atributo.sum(axis=1)
         df_atributo.loc['Total'] = df_atributo.sum(axis=0)
+        df_atributo['Homens'] = df_atributo['Homens'].apply(lambda x: f"{x:,}".replace(",", "."))
+        df_atributo['Mulheres'] = df_atributo['Mulheres'].apply(lambda x: f"{x:,}".replace(",", "."))
+        df_atributo['Total'] = df_atributo['Total'].apply(lambda x: f"{x:,}".replace(",", "."))
         df_atributo = df_atributo.reset_index()
         df_atributo.columns.name = None
         st.dataframe(df_atributo)
@@ -87,6 +90,9 @@ else:
         })
         df_atributo['Total'] = df_atributo.sum(axis=1)
         df_atributo.loc['Total'] = df_atributo.sum(axis=0)
+        df_atributo['Men'] = df_atributo['Men'].apply(lambda x: f"{x:,}")
+        df_atributo['Women'] = df_atributo['Women'].apply(lambda x: f"{x:,}")
+        df_atributo['Total'] = df_atributo['Total'].apply(lambda x: f"{x:,}")
         df_atributo = df_atributo.reset_index()
         df_atributo.columns.name = None
         st.dataframe(df_atributo)
