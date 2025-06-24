@@ -62,24 +62,19 @@ else:
         filtro_genero = coluna_e.selectbox(label='Gender:', options=['Select'] + df['genero'].sort_values().unique().tolist(), index=0)
         filtro_formacao = coluna_d.selectbox(label='Education:', options=['Select'] + df['formacao'].sort_values().unique().tolist(), index=0)
 
-    if filtro_lider != 'Selecione':
+    if filtro_lider != 'Select':
         df = df[df['nome']==filtro_lider.split(" -")[0]]
-    if filtro_area != 'Selecione':
+    if filtro_area != 'Select':
         df = df[df['area']==filtro_area]
-    if filtro_genero != 'Selecione':
+    if filtro_genero != 'Select':
         df = df[df['genero']==filtro_genero]
-    if filtro_formacao != 'Selecione':
+    if filtro_formacao != 'Select':
         df = df[df['formacao']==filtro_formacao]
 
     cont_func = df.shape[0]
     cont_lider = len(df[df['lider']==1])
     media_span_control = cont_func/(cont_lider+1)
     custo_pessoas = df['custo_mensal'].sum()
-    cont_func = (f'{cont_func:,}').replace(",",".")
-    cont_lider = (f'{cont_lider:,}').replace(",",".")
-    media_span_control = (f'{media_span_control:,.2f}').replace(".",",")
-    custo_pessoas = (f'R$ {custo_pessoas:,.0f}').replace(",",".") 
-
     cont_func = (f'{cont_func:,}')
     cont_lider = (f'{cont_lider:,}')
     media_span_control = (f'{media_span_control:,.2f}')
