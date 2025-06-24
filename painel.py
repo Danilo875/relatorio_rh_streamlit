@@ -7,11 +7,6 @@ df = carregar_dados('base.csv')
 df_lider = df[df['lider']==1]
 df_lider['dados_gerente'] = df_lider['nome'] + " - ID: " + df_lider['id'].astype(str)
 
-cont_func = df.shape[0]
-cont_lider = len(df_lider)
-media_span_control = cont_func/cont_lider
-custo_pessoas = df['custo_mensal'].sum()
-
 lang = st.session_state.get("lang", "Português")
 
 if lang == "Português":
@@ -24,6 +19,19 @@ if lang == "Português":
         filtro_genero = coluna_e.selectbox(label='Gênero:', options=['Selecione'] + df['genero'].sort_values().unique().tolist(), index=0)
         filtro_formacao = coluna_d.selectbox(label='Formação:', options=['Selecione'] + df['formacao'].sort_values().unique().tolist(), index=0)
 
+    if filtro_lider != 'Selecione':
+        df = df[df['nome']==filtro_lider.split(" -")[0]]
+    if filtro_area != 'Selecione':
+        df = df[df['area']==filtro_area]
+    if filtro_genero != 'Selecione':
+        df = df[df['genero']==filtro_genero]
+    if filtro_formacao != 'Selecione':
+        df = df[df['formacao']==filtro_formacao]
+
+    cont_func = df.shape[0]
+    cont_lider = len(df[df['lider']==1])
+    media_span_control = cont_func/(cont_lider+1)
+    custo_pessoas = df['custo_mensal'].sum()
     cont_func = (f'{cont_func:,}').replace(",",".")
     cont_lider = (f'{cont_lider:,}').replace(",",".")
     media_span_control = (f'{media_span_control:,.2f}').replace(".",",")
