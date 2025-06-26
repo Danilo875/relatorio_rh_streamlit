@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 from datetime import datetime, date
 from carregamento_dados import carregar_dados
 
 df = carregar_dados('base.csv')
 df_lider = df[df['lider']==1]
-df_lider['dados_gerente'] = df_lider['nome'] + " - ID: " + df_lider['id'].astype(str)
 
 lang = st.session_state.get("lang", "Português")
 
@@ -14,7 +14,7 @@ if lang == "Português":
     with container:
         container.write("###### Painel de filtros")
         coluna_e, coluna_d = st.columns([1,1])
-        filtro_lider = coluna_e.selectbox(label='Líder:', options=['Selecione'] + df_lider['dados_gerente'].sort_values().unique().tolist(), index=0)
+        filtro_lider = coluna_e.selectbox(label='Líder:', options=['Selecione'] + df_lider['nome'].sort_values().unique().tolist(), index=0)
         filtro_area = coluna_d.selectbox(label='Área:', options=['Selecione'] + df['area'].sort_values().unique().tolist(), index=0)
         filtro_genero = coluna_e.selectbox(label='Gênero:', options=['Selecione'] + df['genero'].sort_values().unique().tolist(), index=0)
         filtro_formacao = coluna_d.selectbox(label='Formação:', options=['Selecione'] + df['formacao'].sort_values().unique().tolist(), index=0)
@@ -52,12 +52,34 @@ if lang == "Português":
     cria_cartoes('average.png', 'Número de Liderados - Média', media_span_control, coluna1)
     cria_cartoes('money.png', 'Custo com pessoal', custo_pessoas, coluna2)
 
+    df = df.rename(columns={
+            'area': 'Área',
+            'posicao': 'Posição',
+            'formacao': 'Formação',
+            'genero': 'Gênero',
+            'nome': 'Nome'
+        })
+    atributo = st.selectbox(label='Selecione como quer distribuir os dados:', options=['Área', 'Posição', 'Gênero', 'Formação'], index=0)
+    df_grafico = df.groupby(atributo, as_index=False)["qtd_liderados"].count()
+    fig = px.bar(df_grafico, x=atributo, y="qtd_liderados", title="Exemplo de Gráfico")
+
+    fig.update_layout(
+        plot_bgcolor="white",
+        title_x=0.1,
+        yaxis_title="Qtd. Funcionários",
+        yaxis=dict(showgrid=False)
+    )
+    
+    container = st.container(border=True)
+    with container:
+        container.plotly_chart(fig, use_container_width=True)  
+
 else:
     container = st.container(border=True)
     with container:
         container.write("###### Filters Panel")
         coluna_e, coluna_d = st.columns([1,1])
-        filtro_lider = coluna_e.selectbox(label='Leader:', options=['Select'] + df_lider['dados_gerente'].sort_values().unique().tolist(), index=0)
+        filtro_lider = coluna_e.selectbox(label='Leader:', options=['Select'] + df_lider['nome'].sort_values().unique().tolist(), index=0)
         filtro_area = coluna_d.selectbox(label='Department:', options=['Select'] + df['area'].sort_values().unique().tolist(), index=0)
         filtro_genero = coluna_e.selectbox(label='Gender:', options=['Select'] + df['genero'].sort_values().unique().tolist(), index=0)
         filtro_formacao = coluna_d.selectbox(label='Education:', options=['Select'] + df['formacao'].sort_values().unique().tolist(), index=0)

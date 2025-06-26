@@ -17,7 +17,10 @@ narwhals==1.41.0
 numpy==2.2.6
 packaging==24.2
 pandas==2.2.3
+patsy==1.0.1
 pillow==11.2.1
+plotly==6.1.2
+plotly-express==0.4.1
 protobuf==6.31.1
 pyarrow==20.0.0
 pydeck==0.9.1
@@ -26,8 +29,10 @@ pytz==2025.2
 referencing==0.36.2
 requests==2.32.3
 rpds-py==0.25.1
+scipy==1.16.0
 six==1.17.0
 smmap==5.0.2
+statsmodels==0.14.4
 streamlit==1.45.1
 tenacity==9.1.2
 toml==0.10.2
