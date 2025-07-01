@@ -19,21 +19,20 @@ Este projeto consiste em um aplicativo web interativo desenvolvido com **Streaml
 - [Pandas](https://pandas.pydata.org/) para manipulação de dados.
 - [Plotly](https://plotly.com/python/) para visualização gráfica interativa.
 
-## Como Rodar o Projeto
+# Como Rodar o Projeto
+1. Clone o repositório
 
-# 1. Clone o repositório
+2. Entre na pasta do projeto
 
-# 2. Entre na pasta do projeto
+3. Crie e ative um ambiente virtual (opcional, mas recomendado)
 
-# 3. Crie e ative um ambiente virtual (opcional, mas recomendado)
-
-# 4. Instale as dependências:
+4. Instale as dependências:
 pip install -r requirements.txt
 
-# 5. Execute o aplicativo Streamlit:
+5. Execute o aplicativo Streamlit:
 streamlit run main.py
 
-# 6. O aplicativo abrirá no navegador padrão, geralmente em http://localhost:8501
+6. O aplicativo abrirá no navegador padrão, geralmente em http://localhost:8501
 
 ---
 
@@ -58,19 +57,19 @@ This project consists of an interactive web application developed with **Streaml
 - [Pandas](https://pandas.pydata.org/) for data manipulation.
 - [Plotly](https://plotly.com/python/) for interactive data visualization.
 
-## How to Run the Project
+# How to Run the Project
 
-# 1. Clone the repository
+1. Clone the repository
 
-# 2. Navigate to the project folder
+2. Navigate to the project folder
 
-# 3. Create and activate a virtual environment (optional but recommended)
+3. Create and activate a virtual environment (optional but recommended)
 
-# 4. Install dependencies:
+4. Install dependencies:
 pip install -r requirements.txt
 
-# 5. Run the Streamlit app:
+5. Run the Streamlit app:
 streamlit run main.py
 
-# 6. The app will open in the default browser, usually at http://localhost:8501
+6. The app will open in the default browser, usually at http://localhost:8501
 
