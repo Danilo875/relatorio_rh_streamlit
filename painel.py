@@ -56,23 +56,53 @@ if lang == "Português":
             'area': 'Área',
             'posicao': 'Posição',
             'formacao': 'Formação',
-            'genero': 'Gênero',
-            'nome': 'Nome'
+            'genero': 'Gênero'
         })
     atributo = st.selectbox(label='Selecione como quer distribuir os dados:', options=['Área', 'Posição', 'Gênero', 'Formação'], index=0)
     df_grafico = df.groupby(atributo, as_index=False)["qtd_liderados"].count()
-    fig = px.bar(df_grafico, x=atributo, y="qtd_liderados", title="Exemplo de Gráfico")
+    df_grafico = df_grafico.sort_values(by="qtd_liderados", ascending=False)
+    fig1 = px.bar(df_grafico, x=atributo, y="qtd_liderados", text="qtd_liderados", title=f"Número de Funcionários por {atributo}")
 
-    fig.update_layout(
+    fig1.update_layout(
         plot_bgcolor="white",
         title_x=0.1,
         yaxis_title="Qtd. Funcionários",
         yaxis=dict(showgrid=False)
     )
+    fig1.update_traces(textposition='outside')
+
+    df_grafico = df[df['lider']==1].groupby("Gênero", as_index=False).size().rename(columns={'size': 'Total'})
+    fig2 = px.pie(
+    df_grafico,
+    names="Gênero",
+    values="Total",
+    title="Liderança por Gênero",
+    hole=0.4,
+    color="Gênero",
+    color_discrete_map={
+        "Feminino": "#A8337D",
+        "Masculino": "#1E90FF"
+    }
+)
     
+    df_grafico = df.groupby(atributo, as_index=False)["custo_mensal"].sum()
+    df_grafico = df_grafico.sort_values(by="custo_mensal", ascending=True)
+    fig3 = px.bar(df_grafico, x="custo_mensal", y=atributo, text="custo_mensal", title=f"Custo com Pessoas por {atributo}")
+
+    fig3.update_layout(
+        plot_bgcolor="white",
+        title_x=0.1,
+        xaxis_title=None,
+        yaxis_title=None
+    )
+    fig3.update_traces(textposition='inside')
+
     container = st.container(border=True)
     with container:
-        container.plotly_chart(fig, use_container_width=True)  
+        container.plotly_chart(fig1, use_container_width=True)
+        coluna_e, coluna_d = st.columns([1,1])
+        coluna_e.plotly_chart(fig2, use_container_width=True)
+        coluna_d.plotly_chart(fig3, use_container_width=True)
 
 else:
     container = st.container(border=True)
@@ -116,3 +146,55 @@ else:
     cria_cartoes('leadership.png', 'Number of Managers', cont_lider, coluna2)
     cria_cartoes('average.png', 'Span of Control - Avg', media_span_control, coluna1)
     cria_cartoes('money.png', 'People Cost', custo_pessoas, coluna2)
+
+    df = df.rename(columns={
+            'area': 'Department',
+            'posicao': 'Position',
+            'formacao': 'Education',
+            'genero': 'Gender'
+        })
+    atributo = st.selectbox(label='Select how you want to display data:', options=['Department', 'Position', 'Gender', 'Education'], index=0)
+    df_grafico = df.groupby(atributo, as_index=False)["qtd_liderados"].count()
+    df_grafico = df_grafico.sort_values(by="qtd_liderados", ascending=False)
+    fig1 = px.bar(df_grafico, x=atributo, y="qtd_liderados", text="qtd_liderados", title=f"Number of Employees by {atributo}")
+
+    fig1.update_layout(
+        plot_bgcolor="white",
+        title_x=0.1,
+        yaxis_title="# Employees",
+        yaxis=dict(showgrid=False)
+    )
+    fig1.update_traces(textposition='outside')
+
+    df_grafico = df[df['lider']==1].groupby("Gender", as_index=False).size().rename(columns={'size': 'Total'})
+    fig2 = px.pie(
+    df_grafico,
+    names="Gender",
+    values="Total",
+    title="Leadership by Gender",
+    hole=0.4,
+    color="Gender",
+    color_discrete_map={
+        "Feminino": "#A8337D",
+        "Masculino": "#1E90FF"
+    }
+)
+    
+    df_grafico = df.groupby(atributo, as_index=False)["custo_mensal"].sum()
+    df_grafico = df_grafico.sort_values(by="custo_mensal", ascending=True)
+    fig3 = px.bar(df_grafico, x="custo_mensal", y=atributo, text="custo_mensal", title=f"People Cost by {atributo}")
+
+    fig3.update_layout(
+        plot_bgcolor="white",
+        title_x=0.1,
+        xaxis_title=None,
+        yaxis_title=None
+    )
+    fig3.update_traces(textposition='inside')
+
+    container = st.container(border=True)
+    with container:
+        container.plotly_chart(fig1, use_container_width=True)
+        coluna_e, coluna_d = st.columns([1,1])
+        coluna_e.plotly_chart(fig2, use_container_width=True)
+        coluna_d.plotly_chart(fig3, use_container_width=True)
