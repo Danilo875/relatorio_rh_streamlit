@@ -27,7 +27,10 @@ if lang == "Português":
     if filtro_formacao != 'Selecione':
         df = df[df['formacao']==filtro_formacao]
 
-    cont_func = df['qtd_liderados'].sum()
+     if filtro_lider != 'Selecione':
+        cont_func = df['qtd_liderados'].sum()
+    else:
+        cont_func = df.shape[0]
     cont_lider = len(df[df['lider']==1])
     media_span_control = cont_func/cont_lider
     custo_pessoas = df['custo_mensal'].sum()
@@ -122,7 +125,10 @@ else:
     if filtro_formacao != 'Select':
         df = df[df['formacao']==filtro_formacao]
 
-    cont_func = df['qtd_liderados'].sum()
+     if filtro_lider != 'Selecione':
+        cont_func = df['qtd_liderados'].sum()
+    else:
+        cont_func = df.shape[0]
     cont_lider = len(df[df['lider']==1])
     media_span_control = cont_func/cont_lider
     custo_pessoas = df['custo_mensal'].sum()
