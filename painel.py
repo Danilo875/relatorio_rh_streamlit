@@ -27,7 +27,7 @@ if lang == "Português":
     if filtro_formacao != 'Selecione':
         df = df[df['formacao']==filtro_formacao]
 
-     if filtro_lider != 'Selecione':
+    if filtro_lider != 'Selecione':
         cont_func = df['qtd_liderados'].sum()
     else:
         cont_func = df.shape[0]
@@ -125,7 +125,7 @@ else:
     if filtro_formacao != 'Select':
         df = df[df['formacao']==filtro_formacao]
 
-     if filtro_lider != 'Selecione':
+    if filtro_lider != 'Selecione':
         cont_func = df['qtd_liderados'].sum()
     else:
         cont_func = df.shape[0]
