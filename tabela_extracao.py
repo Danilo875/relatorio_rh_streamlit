@@ -1,0 +1,131 @@
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+from carregamento_dados import carregar_dados
+
+df = carregar_dados('base.csv')
+df_lider = df[df['lider']==1]
+
+lang = st.session_state.get("lang", "Português")
+
+if lang == "Português":
+    st.title("Tabela para Extração")
+    container = st.container(border=True)
+    with container:
+        container.write("###### Painel de filtros")
+        coluna_e, coluna_d = st.columns([1,1])
+        filtro_lider = coluna_e.selectbox(label='Líder:', options=['Selecione'] + df_lider['nome'].sort_values().unique().tolist(), index=0)
+        filtro_area = coluna_d.selectbox(label='Área:', options=['Selecione'] + df['area'].sort_values().unique().tolist(), index=0)
+        filtro_genero = coluna_e.selectbox(label='Gênero:', options=['Selecione'] + df['genero'].sort_values().unique().tolist(), index=0)
+        filtro_formacao = coluna_d.selectbox(label='Formação:', options=['Selecione'] + df['formacao'].sort_values().unique().tolist(), index=0)
+
+    if filtro_lider != 'Selecione':
+        df = df[df['nome']==filtro_lider.split(" -")[0]]
+    if filtro_area != 'Selecione':
+        df = df[df['area']==filtro_area]
+    if filtro_genero != 'Selecione':
+        df = df[df['genero']==filtro_genero]
+    if filtro_formacao != 'Selecione':
+        df = df[df['formacao']==filtro_formacao]
+
+    if filtro_lider != 'Selecione':
+        cont_func = df['qtd_liderados'].sum()
+    else:
+        cont_func = df.shape[0]
+    cont_lider = len(df[df['lider']==1])
+    media_span_control = cont_func/cont_lider
+    custo_pessoas = df['custo_mensal'].sum()
+    cont_func = (f'{cont_func:,}').replace(",",".")
+    cont_lider = (f'{cont_lider:,}').replace(",",".")
+    media_span_control = (f'{media_span_control:,.2f}').replace(".",",")
+    custo_pessoas = (f'R$ {custo_pessoas:,.0f}').replace(",",".")   
+
+    coluna1, coluna2 = st.columns([1,1])
+
+    def cria_cartoes(imagem, nome_medida, valor, coluna):
+        container = coluna.container(border=True)
+        with container:
+            coluna1, coluna2 = st.columns([0.5,1])
+            coluna1.image(imagem)
+            coluna2.write(nome_medida)
+            coluna2.write(valor)
+
+    cria_cartoes('employees.png', 'Quantidade de Funcionarios', cont_func, coluna1)
+    cria_cartoes('leadership.png', 'Quantidade de Líderes', cont_lider, coluna2)
+    cria_cartoes('average.png', 'Número de Liderados - Média', media_span_control, coluna1)
+    cria_cartoes('money.png', 'Custo com pessoal', custo_pessoas, coluna2)
+
+    df = df.rename(columns={
+        'area': 'Área',
+        'posicao': 'Posição',
+        'formacao': 'Formação',
+        'genero': 'Gênero',
+        'data_nascimento': 'Data de Nascimento',
+        'custo_mensal': 'Custo Mensal',
+        'nome': 'Nome',
+        'qtd_liderados': "Qtd. Liderados"
+    })
+
+    st.write('### Tabela de funcionários (extração em .csv)')
+    st.dataframe(df.drop(['lider'], axis=1))
+
+else:
+    st.title("Export Table")
+    container = st.container(border=True)
+    with container:
+        container.write("###### Filters Panel")
+        coluna_e, coluna_d = st.columns([1,1])
+        filtro_lider = coluna_e.selectbox(label='Leader:', options=['Select'] + df_lider['nome'].sort_values().unique().tolist(), index=0)
+        filtro_area = coluna_d.selectbox(label='Department:', options=['Select'] + df['area'].sort_values().unique().tolist(), index=0)
+        filtro_genero = coluna_e.selectbox(label='Gender:', options=['Select'] + df['genero'].sort_values().unique().tolist(), index=0)
+        filtro_formacao = coluna_d.selectbox(label='Education:', options=['Select'] + df['formacao'].sort_values().unique().tolist(), index=0)
+
+    if filtro_lider != 'Select':
+        df = df[df['nome']==filtro_lider.split(" -")[0]]
+    if filtro_area != 'Select':
+        df = df[df['area']==filtro_area]
+    if filtro_genero != 'Select':
+        df = df[df['genero']==filtro_genero]
+    if filtro_formacao != 'Select':
+        df = df[df['formacao']==filtro_formacao]
+
+    if filtro_lider != 'Selecione':
+        cont_func = df['qtd_liderados'].sum()
+    else:
+        cont_func = df.shape[0]
+    cont_lider = len(df[df['lider']==1])
+    media_span_control = cont_func/cont_lider
+    custo_pessoas = df['custo_mensal'].sum()
+    cont_func = (f'{cont_func:,}')
+    cont_lider = (f'{cont_lider:,}')
+    media_span_control = (f'{media_span_control:,.2f}')
+    custo_pessoas = (f'R$ {custo_pessoas:,.0f}')
+
+    coluna1, coluna2 = st.columns([1,1])
+
+    def cria_cartoes(imagem, nome_medida, valor, coluna):
+        container = coluna.container(border=True)
+        with container:
+            coluna1, coluna2 = st.columns([0.5,1])
+            coluna1.image(imagem)
+            coluna2.write(nome_medida)
+            coluna2.write(valor)
+
+    cria_cartoes('employees.png', 'Number of Employees', cont_func, coluna1)
+    cria_cartoes('leadership.png', 'Number of Managers', cont_lider, coluna2)
+    cria_cartoes('average.png', 'Span of Control - Avg', media_span_control, coluna1)
+    cria_cartoes('money.png', 'People Cost', custo_pessoas, coluna2)
+
+    df = df.rename(columns={
+        'area': 'Department',
+        'posicao': 'Position',
+        'formacao': 'Education',
+        'genero': 'Gender',
+        'data_nascimento': 'Birth Date',
+        'custo_mensal': 'Monthly Cost',
+        'nome': 'Name',
+        'qtd_liderados': "# Direct Reports"
+    })
+
+    st.write('### Tabela de funcionários (extração em .csv)')
+    st.dataframe(df.drop(['lider'], axis=1))

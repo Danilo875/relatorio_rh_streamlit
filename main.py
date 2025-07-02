@@ -23,8 +23,7 @@ if lang == "Português":
                 st.Page("inicio.py", title="Início"),
                 st.Page("painel.py", title="Painel"),
                 st.Page("aposentadoria.py", title="Simulador Aposentadoria"),
-                st.Page("tabela_extracao.py", title="Tabela para Extração"),
-                st.Page("definicoes.py", title="Definições")
+                st.Page("tabela_extracao.py", title="Tabela para Extração")
             ]
         }
     )
@@ -45,8 +44,7 @@ else:
                 st.Page("inicio.py", title="Home"),
                 st.Page("painel.py", title="Dashboard"),
                 st.Page("aposentadoria.py", title="Retirement Simulator"),
-                st.Page("tabela_extracao.py", title="Extract Table"),
-                st.Page("definicoes.py", title="Definitions")
+                st.Page("tabela_extracao.py", title="Extract Table")
             ]
         }
     )

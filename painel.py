@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from datetime import datetime, date
 from carregamento_dados import carregar_dados
 
 df = carregar_dados('base.csv')
@@ -28,9 +27,9 @@ if lang == "Português":
     if filtro_formacao != 'Selecione':
         df = df[df['formacao']==filtro_formacao]
 
-    cont_func = df.shape[0]
+    cont_func = df['qtd_liderados'].sum()
     cont_lider = len(df[df['lider']==1])
-    media_span_control = cont_func/(cont_lider+1)
+    media_span_control = cont_func/cont_lider
     custo_pessoas = df['custo_mensal'].sum()
     cont_func = (f'{cont_func:,}').replace(",",".")
     cont_lider = (f'{cont_lider:,}').replace(",",".")
@@ -59,7 +58,7 @@ if lang == "Português":
             'genero': 'Gênero'
         })
     atributo = st.selectbox(label='Selecione como quer distribuir os dados:', options=['Área', 'Posição', 'Gênero', 'Formação'], index=0)
-    df_grafico = df.groupby(atributo, as_index=False)["qtd_liderados"].count()
+    df_grafico = df.groupby(atributo, as_index=False)["qtd_liderados"].sum()
     df_grafico = df_grafico.sort_values(by="qtd_liderados", ascending=False)
     fig1 = px.bar(df_grafico, x=atributo, y="qtd_liderados", text="qtd_liderados", title=f"Número de Funcionários por {atributo}")
 
@@ -123,9 +122,9 @@ else:
     if filtro_formacao != 'Select':
         df = df[df['formacao']==filtro_formacao]
 
-    cont_func = df.shape[0]
+    cont_func = df['qtd_liderados'].sum()
     cont_lider = len(df[df['lider']==1])
-    media_span_control = cont_func/(cont_lider+1)
+    media_span_control = cont_func/cont_lider
     custo_pessoas = df['custo_mensal'].sum()
     cont_func = (f'{cont_func:,}')
     cont_lider = (f'{cont_lider:,}')
@@ -154,7 +153,7 @@ else:
             'genero': 'Gender'
         })
     atributo = st.selectbox(label='Select how you want to display data:', options=['Department', 'Position', 'Gender', 'Education'], index=0)
-    df_grafico = df.groupby(atributo, as_index=False)["qtd_liderados"].count()
+    df_grafico = df.groupby(atributo, as_index=False)["qtd_liderados"].sum()
     df_grafico = df_grafico.sort_values(by="qtd_liderados", ascending=False)
     fig1 = px.bar(df_grafico, x=atributo, y="qtd_liderados", text="qtd_liderados", title=f"Number of Employees by {atributo}")
 

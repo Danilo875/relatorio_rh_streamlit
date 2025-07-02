@@ -72,4 +72,3 @@ pip install -r requirements.txt
 streamlit run main.py
 
 6. The app will open in the default browser, usually at http://localhost:8501
-
