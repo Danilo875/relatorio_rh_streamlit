@@ -34,6 +34,7 @@ streamlit run main.py
 
 6. O aplicativo abrirá no navegador padrão, geralmente em http://localhost:8501
 
+OBS.: Opcionalmente, você também pode baixar apenas o arquivo 'Relatório de RH.html' e abrir em seu navegador.
 ---
 
 # Human Resources Data Analysis Project
@@ -72,3 +73,5 @@ pip install -r requirements.txt
 streamlit run main.py
 
 6. The app will open in the default browser, usually at http://localhost:8501
+
+Optionally you can also download the file 'Relatório de RH.html' and open it on your browser.
