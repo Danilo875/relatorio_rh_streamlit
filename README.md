@@ -35,6 +35,7 @@ streamlit run main.py
 6. O aplicativo abrirá no navegador padrão, geralmente em http://localhost:8501
 
 OBS.: Opcionalmente, você também pode baixar apenas o arquivo 'Relatório de RH.html' e abrir em seu navegador.
+
 ---
 
 # Human Resources Data Analysis Project
